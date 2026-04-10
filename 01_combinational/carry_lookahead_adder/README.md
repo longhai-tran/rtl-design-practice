@@ -1,33 +1,40 @@
-# Carry Lookahead Adder
+# Carry Lookahead Adder (CLA)
 
-A parameterizable combinational carry-lookahead adder. It adds two WIDTH-bit operands and a carry-in to produce WIDTH-bit sum and carry-out. Verification uses directed exhaustive self-checking testbench.
+![Language](https://img.shields.io/badge/Language-Verilog-blue.svg)
+![Status](https://img.shields.io/badge/Status-Verified-success.svg)
+![Type](https://img.shields.io/badge/Type-Combinational-orange.svg)
+
+A parameterizable combinational carry-lookahead adder. It adds two `WIDTH`-bit operands and a carry-in to produce a `WIDTH`-bit sum and a carry-out. Verification utilizes a directed exhaustive self-checking testbench.
+
+---
 
 ## 📋 Specification / Architecture
 
 | Parameter | Default | Description |
 |-----------|---------|-------------|
-| WIDTH     | 4       | Data bus width of inputs `a`, `b`, and output `sum` |
+| `WIDTH`     | 4       | Data bus width of inputs `a`, `b`, and output `sum` |
 
 ### Architecture Description
 
-**Problems with Ripple Carry Adder (RCA):** carry must "ripple" one bit at a time from LSB to MSB — the next bit must wait for the previous bit to finish calculating → slow when WIDTH is large.
+**The Bottleneck of Ripple Carry Adder (RCA):** The carry signal must "ripple" through the circuit one bit at a time from LSB to MSB. The calculation of the next bit is delayed until the previous bit completes its carry calculation. This makes RCA impractically slow for large `WIDTH`.
 
-**Solution of CLA:** Calculate carry first, in parallel, based on 2 intermediate signals:
+**The CLA Solution:** CLA eliminates this ripple effect by calculating all carries simultaneously using two intermediate signals generated for each bit position:
 
-| Signal | Formula | Meaning |
+| Signal | Formula | Function |
 |----------|-----------|---------|
-| **Propagate** `p[i]` | `a[i] ^ b[i]` | This bit will *propagate* carry in if there is one |
-| **Generate** `g[i]` | `a[i] & b[i]` | This bit will *generate* carry out even if carry in is 0 |
+| **Propagate** `p[i]` | `a[i] ^ b[i]` | Indicates if the current bit will *propagate* a carry-in to the next stage |
+| **Generate** `g[i]` | `a[i] & b[i]` | Indicates if the current bit will *generate* a carry-out independently |
 
-From these two signals, the carry of each bit is determined directly:
-
-```
+By flattening the logic, the carry for any bit position can be evaluated directly:
+```verilog
 c[i+1] = g[i] | (p[i] & c[i])
 ```
+*Note: The carry bit `c[i+1]` is either generated at the current stage (`g[i]`) OR a previous carry is propagated through the current stage (`p[i] & c[i]`).*
 
-> The carry bit `c[i+1]` is generated (`g[i]`) **or** is carried forward (`p[i]`) from the previous carry.
-
-Finally, the sum of each bit: `sum[i] = p[i] ^ c[i]`
+Finally, the sum is directly evaluated:
+```verilog
+sum[i] = p[i] ^ c[i]
+```
 
 ### Architecture Diagram
 
@@ -59,23 +66,23 @@ Finally, the sum of each bit: `sum[i] = p[i] ^ c[i]`
              v               v               v               v
            sum[3]          sum[2]          sum[1]          sum[0]
 
-    * Note: SUM calculation implicitly uses P[i] (where sum[i] = p[i] XOR c[i])
-
+    * Note: SUM calculation implicitly uses P[i] (where sum[i] = p[i] ^ c[i])
 ```
 
 ## 🔌 Port List / Interface
 
 | Signal | Direction | Width | Description |
 |--------|-----------|-------|-------------|
-| a      | Input     | WIDTH | Operand A |
-| b      | Input     | WIDTH | Operand B |
-| cin    | Input     | 1     | Carry input |
-| sum    | Output    | WIDTH | Sum output |
-| cout   | Output    | 1     | Carry output |
+| `a`      | Input     | WIDTH | Operand A |
+| `b`      | Input     | WIDTH | Operand B |
+| `cin`    | Input     | 1     | Carry input from previous stage |
+| `sum`    | Output    | WIDTH | Calculated sum output |
+| `cout`   | Output    | 1     | Carry output to next stage |
 
 ## 🖥️ Simulation Results
 
-Run simulation from either `sim/modelsim` or `sim/xsim` to view waveform.
+Run simulation from either `sim/modelsim` or `sim/xsim` to view the waveform.
+
 ![Waveform](image_results/xsim_wave_carry_lookahead_adder.png)
 
 ```text
@@ -98,22 +105,26 @@ Run simulation from either `sim/modelsim` or `sim/xsim` to view waveform.
 ### Vivado xsim
 ```bash
 cd sim/xsim && make sim
-# Or open the GUI:
+
+# Open waveform GUI view:
 make gui
-# Clean simulation files:
+
+# Clean up simulation generated files:
 make clean
 ```
 
 ### ModelSim / Questa
 ```bash
 cd sim/modelsim && make sim
-# Or open the GUI:
+
+# Open waveform GUI view:
 make gui
-# Clean simulation files:
+
+# Clean up simulation generated files:
 make clean
 ```
 
-### Portable (no make)
+### Portable Environment (Without Make)
 ```bash
 # Vivado xsim
 cd sim/xsim && xtclsh simulate.tcl
@@ -126,9 +137,9 @@ cd sim/modelsim && vsim -c -do simulate.do
 
 | Test | Input / Condition | Expected | Result |
 |------|-------------------|----------|--------|
-| exhaustive_width4 | All `{a,b,cin}` combinations for WIDTH=4 (512 vectors) | `{cout,sum} = a + b + cin` | Pass |
-| corner_all_zero   | `a=0`, `b=0`, `cin=0` | `sum=0`, `cout=0` | Pass |
-| corner_all_one    | `a=1111`, `b=1111`, `cin=1` | `sum=1111`, `cout=1` | Pass |
+| `exhaustive_width4` | All `{a,b,cin}` combinations for WIDTH=4 (512 vectors) | `{cout,sum} = a + b + cin` | Pass |
+| `corner_all_zero`   | `a=0`, `b=0`, `cin=0` | `sum=0`, `cout=0` | Pass |
+| `corner_all_one`    | `a=1111`, `b=1111`, `cin=1` | `sum=1111`, `cout=1` | Pass |
 
 ## 🐛 Bugs Found
 
