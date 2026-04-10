@@ -40,5 +40,5 @@ vsim.wlf
 __pycache__/
 
 # ===== Image results =====
-image_results/questa_*
+**/image_results/questa_*
 
