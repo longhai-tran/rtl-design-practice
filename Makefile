@@ -11,13 +11,15 @@
 
 SHELL := bash
 
+MOD ?=
+
 # Automatically find all sim/modelsim and sim/xsim directories
 MODELSIM_DIRS := $(shell find 01_combinational 02_sequential 03_fsm 04_memory 05_interfaces \
                           -type d -name "modelsim" 2>/dev/null)
 XSIM_DIRS     := $(shell find 01_combinational 02_sequential 03_fsm 04_memory 05_interfaces \
                           -type d -name "xsim" 2>/dev/null)
 
-.PHONY: clean clean-dry clean-modelsim clean-xsim help
+.PHONY: clean clean-dry clean-modelsim clean-xsim lint help
 
 # -----------------------------------------------------------------------------
 # clean — Remove all artifacts in the entire project (fastest way)
@@ -54,6 +56,15 @@ clean-xsim:
 	@echo "Done."
 
 # -----------------------------------------------------------------------------
+# lint — Run Verilator lint-only check on all RTL files (or a specific module)
+# Usage:
+#   make lint               # Lint entire project
+#   make lint MOD=01_combinational/mux_2to1
+# -----------------------------------------------------------------------------
+lint:
+	@bash scripts/lint.sh $(MOD)
+
+# -----------------------------------------------------------------------------
 # help — Display list of targets
 # -----------------------------------------------------------------------------
 help:
@@ -64,4 +75,6 @@ help:
 	@echo "  make clean-dry       Preview: list what will be deleted"
 	@echo "  make clean-modelsim  Only remove ModelSim/Questa artifacts"
 	@echo "  make clean-xsim      Only remove Vivado xsim artifacts"
+	@echo "  make lint             Run Verilator lint on all RTL files"
+	@echo "  make lint MOD=<path>  Lint a specific module directory"
 	@echo ""
