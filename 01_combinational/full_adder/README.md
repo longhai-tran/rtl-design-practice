@@ -1,26 +1,32 @@
 # Full Adder
 
+![Language](https://img.shields.io/badge/Language-Verilog-blue.svg)
+![Status](https://img.shields.io/badge/Status-Verified-success.svg)
+![Type](https://img.shields.io/badge/Type-Combinational-orange.svg)
+
 A parameterizable combinational full adder that computes sum and carry-out from two operands and one carry-in. Verification is done using directed self-checking testbench (Verilog).
+
+---
 
 ## 📋 Specification / Architecture
 
 | Parameter | Default | Description |
 |-----------|---------|-------------|
-| WIDTH     | 1       | Data bus width |
+| `WIDTH`     | 1       | Data bus width |
 
 ## 🔌 Port List / Interface
 
 | Signal | Direction | Width | Description |
 |--------|-----------|-------|-------------|
-| a      | Input     | WIDTH | Operand A |
-| b      | Input     | WIDTH | Operand B |
-| cin    | Input     | 1     | Carry input |
-| sum    | Output    | WIDTH | Sum output |
-| cout   | Output    | 1     | Carry output |
+| `a`      | Input     | `WIDTH` | Operand A |
+| `b`      | Input     | `WIDTH` | Operand B |
+| `cin`    | Input     | 1     | Carry input |
+| `sum`    | Output    | `WIDTH` | Sum output |
+| `cout`   | Output    | 1     | Carry output |
 
 ## 🖥️ Simulation Results
 
-Run simulation from either `sim/modelsim` or `sim/xsim` to view waveform.
+Run simulation from either `sim/modelsim` or `sim/xsim` to view the waveform.
 ![Waveform](image_results/wave_full_adder.png)
 
 ```text
@@ -43,22 +49,26 @@ Run simulation from either `sim/modelsim` or `sim/xsim` to view waveform.
 ### Vivado xsim
 ```bash
 cd sim/xsim && make sim
-# Or open the GUI:
+
+# Open waveform GUI view:
 make gui
-# Clean simulation files:
+
+# Clean up simulation generated files:
 make clean
 ```
 
 ### ModelSim / Questa
 ```bash
 cd sim/modelsim && make sim
-# Or open the GUI:
+
+# Open waveform GUI view:
 make gui
-# Clean simulation files:
+
+# Clean up simulation generated files:
 make clean
 ```
 
-### Portable (no make)
+### Portable Environment (Without Make)
 ```bash
 # Vivado xsim
 cd sim/xsim && xtclsh simulate.tcl
@@ -71,7 +81,7 @@ cd sim/modelsim && vsim -c -do simulate.do
 
 | Test | Input / Condition | Expected | Result |
 |------|-------------------|----------|--------|
-| all_combinations | Directed test over all `{a,b,cin}` combinations (8 vectors) | `{cout,sum} = a + b + cin` | Pass |
+| `all_combinations` | Directed test over all `{a,b,cin}` combinations (8 vectors) | `{cout,sum} = a + b + cin` | Pass |
 
 ## 🐛 Bugs Found
 

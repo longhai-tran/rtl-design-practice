@@ -1,12 +1,18 @@
 # Ripple Carry Adder
 
-A parameterizable combinational ripple-carry adder. It adds two WIDTH-bit operands and a carry-in to produce WIDTH-bit sum and carry-out. Verification uses directed exhaustive self-checking testbench.
+![Language](https://img.shields.io/badge/Language-Verilog-blue.svg)
+![Status](https://img.shields.io/badge/Status-Verified-success.svg)
+![Type](https://img.shields.io/badge/Type-Combinational-orange.svg)
+
+A parameterizable combinational ripple-carry adder. It adds two `WIDTH`-bit operands and a carry-in to produce a `WIDTH`-bit sum and a carry-out. Verification uses directed exhaustive self-checking testbench.
+
+---
 
 ## 📋 Specification / Architecture
 
 | Parameter | Default | Description |
 |-----------|---------|-------------|
-| WIDTH     | 4       | Data bus width of inputs `a`, `b`, and output `sum` |
+| `WIDTH`     | 4       | Data bus width of inputs `a`, `b`, and output `sum` |
 
 ### Architecture Description
 
@@ -39,15 +45,15 @@ The final carry-out is `cout = c[WIDTH]`.
 
 | Signal | Direction | Width | Description |
 |--------|-----------|-------|-------------|
-| a      | Input     | WIDTH | Operand A |
-| b      | Input     | WIDTH | Operand B |
-| cin    | Input     | 1     | Carry input |
-| sum    | Output    | WIDTH | Sum output |
-| cout   | Output    | 1     | Carry output |
+| `a`      | Input     | `WIDTH` | Operand A |
+| `b`      | Input     | `WIDTH` | Operand B |
+| `cin`    | Input     | 1     | Carry input |
+| `sum`    | Output    | `WIDTH` | Sum output |
+| `cout`   | Output    | 1     | Carry output |
 
 ## 🖥️ Simulation Results
 
-Run simulation from either `sim/modelsim` or `sim/xsim` to view waveform.
+Run simulation from either `sim/modelsim` or `sim/xsim` to view the waveform.
 ![Waveform](image_results/xsim_wave_ripple_carry_adder.png)
 
 ```text
@@ -70,22 +76,26 @@ Run simulation from either `sim/modelsim` or `sim/xsim` to view waveform.
 ### Vivado xsim
 ```bash
 cd sim/xsim && make sim
-# Or open the GUI:
+
+# Open waveform GUI view:
 make gui
-# Clean simulation files:
+
+# Clean up simulation generated files:
 make clean
 ```
 
 ### ModelSim / Questa
 ```bash
 cd sim/modelsim && make sim
-# Or open the GUI:
+
+# Open waveform GUI view:
 make gui
-# Clean simulation files:
+
+# Clean up simulation generated files:
 make clean
 ```
 
-### Portable (no make)
+### Portable Environment (Without Make)
 ```bash
 # Vivado xsim
 cd sim/xsim && xtclsh simulate.tcl
@@ -98,9 +108,9 @@ cd sim/modelsim && vsim -c -do simulate.do
 
 | Test | Input / Condition | Expected | Result |
 |------|-------------------|----------|--------|
-| exhaustive_width4 | All `{a,b,cin}` combinations for WIDTH=4 (512 vectors) | `{cout,sum} = a + b + cin` | Pass |
-| corner_all_zero   | `a=0`, `b=0`, `cin=0` | `sum=0`, `cout=0` | Pass |
-| corner_all_one    | `a=1111`, `b=1111`, `cin=1` | `sum=1111`, `cout=1` | Pass |
+| `exhaustive_width4` | All `{a,b,cin}` combinations for WIDTH=4 (512 vectors) | `{cout,sum} = a + b + cin` | Pass |
+| `corner_all_zero`   | `a=0`, `b=0`, `cin=0` | `sum=0`, `cout=0` | Pass |
+| `corner_all_one`    | `a=1111`, `b=1111`, `cin=1` | `sum=1111`, `cout=1` | Pass |
 
 ## 🐛 Bugs Found
 
