@@ -38,3 +38,7 @@ vsim.wlf
 *.bak
 *.tmp
 __pycache__/
+
+# ===== Image results =====
+**/image_results/questa_*
+

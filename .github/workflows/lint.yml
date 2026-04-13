@@ -1,0 +1,61 @@
+name: RTL Lint Check
+
+on:
+  push:
+    branches: [ main, dev ]
+    paths: ['**.v', '**.sv']
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Cache apt packages to speed up subsequent runs (~30s saved per run)
+      - name: Cache apt packages
+        uses: actions/cache@v4
+        with:
+          path: /var/cache/apt/archives
+          key: ${{ runner.os }}-apt-verilator-${{ hashFiles('.github/workflows/lint.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-apt-verilator-
+
+      - name: Install Verilator
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y verilator
+          verilator --version
+
+      - name: Lint Verilog RTL (exclude testbenches)
+        run: |
+          RTL_FILES=$(find . -name "*.v" -not -name "*_tb.v" -not -path "*/.git/*")
+          if [ -z "$RTL_FILES" ]; then
+            echo "No RTL files found."
+            exit 0
+          fi
+          PASS=0; FAIL=0
+          for f in $RTL_FILES; do
+            echo "→ Linting $f"
+            if verilator --lint-only -Wall "$f"; then
+              PASS=$((PASS + 1))
+            else
+              FAIL=$((FAIL + 1))
+            fi
+          done
+          echo ""
+          echo "=========================================="
+          echo "  Lint Results: ✅ $PASS passed | ❌ $FAIL failed"
+          echo "=========================================="
+          [ $FAIL -eq 0 ] || exit 1
+
+      # Uncomment when starting sv-verification repo (Phase 1 - Month 7/2026)
+      # - name: Lint SystemVerilog (exclude testbenches)
+      #   run: |
+      #     SV_FILES=$(find . -name "*.sv" -not -name "*_tb.sv" -not -path "*/.git/*")
+      #     if [ -z "$SV_FILES" ]; then exit 0; fi
+      #     for f in $SV_FILES; do
+      #       echo "→ Linting $f"
+      #       verilator --lint-only --sv -Wall "$f" || exit 1
+      #     done
