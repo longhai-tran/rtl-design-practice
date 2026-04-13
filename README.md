@@ -12,8 +12,8 @@
 
 | Category | Modules | Status |
 |----------|---------|--------|
-| `01_combinational` | mux_2to1, full_adder, alu_4bit | 🔄 In Progress |
-| `02_sequential`    | dff, counter_4bit, shift_register | 📅 Planned |
+| `01_combinational` | mux_2to1, full_adder, alu_4bit | ✅ Active |
+| `02_sequential`    | dff, counter_4bit, shift_register | 🔄 In Progress |
 | `03_fsm`           | sequence_detector, traffic_light | 📅 Planned |
 | `04_memory`        | sync_fifo, async_fifo | 📅 Planned |
 | `05_interfaces`    | uart_tx, uart_rx, spi_master | 📅 Planned |
@@ -32,9 +32,9 @@
 
 ```bash
 cd 01_combinational/mux_2to1/sim/xsim
-make sim      # Run simulation
-make wave     # Open waveform
-make clean    # Clean artifacts
+make sim        # Run simulation
+make gui        # Open waveform
+make clean      # Clean artifacts
 ```
 
 ## 🔧 Developer Workflow
