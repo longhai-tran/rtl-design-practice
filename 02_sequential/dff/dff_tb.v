@@ -1,8 +1,12 @@
 /*******************************************************************************
  * Module: dff_tb.v                                                            *
- * Description: Self-checking testbench for D Flip-Flop (synchronous reset)   *
+ * Description: Self-checking testbench for D Flip-Flop (synchronous reset)    *
+ * File Created: Tuesday, 14th April 2026 11:05:29 am                          *
  * Author: Long Hai                                                            *
- *******************************************************************************/
+ * -----                                                                       *
+ * Last Modified: Tuesday, 14th April 2026 11:11:52 am                         *
+ * Modified By: Long Hai                                                       *
+*******************************************************************************/
 
 `timescale 1ns/1ps
 
