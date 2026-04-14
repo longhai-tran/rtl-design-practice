@@ -53,8 +53,9 @@ module register_8bit_tb;
             expected_q = exp_q;
             @(posedge clk); #1;
             if (q !== exp_q) begin
-                $display("FAIL  TC%0d | t=%0t | rst_n=%b d=0x%02h | q=0x%02h (exp 0x%02h)",
-                          tc, $time, rst_n, d_in, q, exp_q);
+                // $display("FAIL  TC%0d | t=%0t | rst_n=%b d=0x%02h | q=0x%02h (exp 0x%02h)",
+                //           tc, $time, rst_n, d_in, q, exp_q);
+                $display(" FAIL   | %4d | %6t |   1   | 0x%02h | 0x%02h (exp 0x%02h)", tc, $time, d_in, q, exp_q);
                 error_count = error_count + 1;
             end else
                 // $display(" PASS   | TC%0d | t=%0t | rst_n=%b d=0x%02h | q=0x%02h",
@@ -86,7 +87,7 @@ module register_8bit_tb;
         // --- Reset check ---
         @(posedge clk); #1;
         if (q !== expected_q) begin
-            $display("FAIL  TC0 | Reset: q=0x%02h (exp 0x00)", q);
+            $display(" FAIL   | %4d | %6t | Reset: q=0x%02h (exp 0x00)", tc, $time, q);
             error_count = error_count + 1;
         end else
             // $display("PASS  TC0 | Reset: q=0x%02h", q);
