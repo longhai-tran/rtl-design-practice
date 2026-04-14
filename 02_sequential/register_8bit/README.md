@@ -29,13 +29,13 @@ Q(t+1) = D(t)    if rst_n = 1   (on posedge clk)
 ### Architecture Diagram (ASCII)
 
 ```text
-         ┌──────────────────────────────────┐
-  clk ──►│ posedge trigger                  │
-         │                                  │
- rst_n ──►  if (!rst_n) q <= 8'h00;        ├──► q [7:0]
-  (neg)  │  else        q <= d;             │
-d [7:0] ►│                                  │
-         └──────────────────────────────────┘
+                     ┌────────────────────────┐
+          d [7:0] ──►│                        │
+                     │                        │
+            rst_n ──►│         DFF            │──► q [7:0]
+                     │                        │
+              clk ──►│  async reset (low)     │
+                     └────────────────────────┘
 ```
 
 ---
