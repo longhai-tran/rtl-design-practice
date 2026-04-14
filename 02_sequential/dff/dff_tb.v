@@ -51,8 +51,9 @@ module dff_tb;
             @(posedge clk); #1;           // sample 1 ns after rising edge
             expected_q = exp_q;
             if (q !== expected_q) begin
-                $display("FAIL  t=%0t | rst_n=%b d=%b | q=%b (exp %b)",
-                          $time, rst_n, d_in, q, expected_q);
+                // $display("FAIL  t=%0t | rst_n=%b d=%b | q=%b (exp %b)",
+                //           $time, rst_n, d_in, q, expected_q);
+                $display(" FAIL   | %8t |   %b    %b | %b (exp %b)| ", $time, rst_n, d_in, q, expected_q);
                 error_count = error_count + 1;
             end else begin
                     // $display("  PASS    t=%0t | rst_n=%b d=%b | q=%b",
@@ -80,7 +81,8 @@ module dff_tb;
         // --- Reset phase ---
         @(posedge clk); #1;
         if (q !== 1'b0) begin
-            $display("FAIL  t=%0t | Reset check: q=%b (exp 0)", $time, q);
+            // $display("FAIL  t=%0t | Reset check: q=%b (exp 0)", $time, q);
+            $display(" FAIL   | %8t |   0    x | %b (exp 0)| reset holds", $time, q);
             error_count = error_count + 1;
         end else
             // $display("  PASS    t=%5t | rst_n=0 d=x | q=%b (reset holds)", $time, q);
