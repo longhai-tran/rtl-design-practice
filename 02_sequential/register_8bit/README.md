@@ -1,7 +1,7 @@
 # 8-Bit Parallel Register — Parallel-Load Register with Async Reset
 
 ![Language](https://img.shields.io/badge/Language-Verilog-blue.svg)
-![Status](https://img.shields.io/badge/Status-complete-brightgreen.svg)
+![Status](https://img.shields.io/badge/Status-Verified-success.svg)
 ![Type](https://img.shields.io/badge/Type-Sequential-purple.svg)
 
 An 8-bit parallel-in parallel-out (PIPO) register with active-low asynchronous reset. On each rising clock edge, the 8-bit input `d` is latched into output `q`. When `rst_n` is de-asserted, `q` is immediately cleared to `8'h00` independent of the clock. Verification is performed using a directed self-checking testbench (Verilog) with boundary patterns (all-ones, all-zeros, alternating bits) and an async reset check mid-operation.

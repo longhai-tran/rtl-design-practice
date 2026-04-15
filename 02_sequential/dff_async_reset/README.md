@@ -1,7 +1,7 @@
 # D Flip-Flop with Async Reset — Edge-Triggered Register (Async Active-Low Reset)
 
 ![Language](https://img.shields.io/badge/Language-Verilog-blue.svg)
-![Status](https://img.shields.io/badge/Status-complete-brightgreen.svg)
+![Status](https://img.shields.io/badge/Status-Verified-success.svg)
 ![Type](https://img.shields.io/badge/Type-Sequential-purple.svg)
 
 A 1-bit D Flip-Flop with active-low **asynchronous** reset, triggered on the rising edge of the clock. Unlike its synchronous counterpart (`dff`), the reset here takes effect immediately upon de-assertion of `rst_n` — independent of the clock edge. Verification is performed using a directed self-checking testbench (Verilog), including a key test that asserts reset mid-cycle without waiting for a clock edge.
