@@ -48,8 +48,9 @@ module counter_4bit_tb;
             expected_q = expected_q + 1;
             @(posedge clk); #1;
             if (q !== expected_q) begin
-                $display("FAIL  TC%0d | t=%0t | q=%0d (exp %0d)",
-                          tc, $time, q, expected_q);
+                // $display("FAIL  TC%0d | t=%0t | q=%0d (exp %0d)",
+                //           tc, $time, q, expected_q);
+                $display("%-7s | %4d | %8t |  q=%0d (exp %0d)", "FAIL", tc, $time, q, expected_q);
                 error_count = error_count + 1;
             end else
                 // $display("PASS  TC%0d | t=%0t | q=%0d", tc, $time, q);
@@ -76,7 +77,8 @@ module counter_4bit_tb;
         // --- Reset check ---
         @(posedge clk); #1;
         if (q !== 4'b0) begin
-            $display("FAIL  TC0 | Reset: q=%0d (exp 0)", q);
+            // $display("FAIL  TC0 | Reset: q=%0d (exp 0)", q);
+            $display("%-7s | %4s | %8t |  Reset: q=%0d (exp 0)", "FAIL", "0", $time, q);
             error_count = error_count + 1;
         end else
             // $display("PASS  TC0 | Reset: q=%0d", q);
@@ -93,7 +95,8 @@ module counter_4bit_tb;
         @(posedge clk); #1;
         expected_q = 4'd0;
         if (q !== expected_q) begin
-            $display("FAIL  ROLL | t=%0t | rollover: q=%0d (exp 0)", $time, q);
+            // $display("FAIL  ROLL | t=%0t | rollover: q=%0d (exp 0)", $time, q);
+            $display("%-7s | %4s | %8t |  rollover: q=%0d (exp 0)", "FAIL", "ROLL", $time, q);
             error_count = error_count + 1;
         end else
             // $display("PASS  ROLL | t=%0t | rollover: q=%0d", $time, q);
@@ -106,7 +109,8 @@ module counter_4bit_tb;
         expected_q = 4'b0;
         #3;
         if (q !== 4'b0) begin
-            $display("FAIL  RST | Async reset: q=%0d (exp 0)", q);
+            // $display("FAIL  RST | Async reset: q=%0d (exp 0)", q);
+            $display("%-7s | %4s | %8t |  Async reset: q=%0d (exp 0)", "FAIL", "RST", $time, q);
             error_count = error_count + 1;
         end else
             // $display("PASS  RST | Async reset: q=%0d", q);
