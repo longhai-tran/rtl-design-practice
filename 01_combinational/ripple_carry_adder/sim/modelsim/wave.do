@@ -8,6 +8,10 @@
 # ---------------------------------------------------------------------------
 
 # Clear existing waveforms
+
+# Auto-detect testbench name from directory structure
+set TB [file tail [file dirname [file dirname [pwd]]]]_tb
+
 quietly WaveActivateNextPane {} 0
 
 # Global wave configuration to show short signal names (e.g. 'clk' instead of '/tb/clk')
@@ -15,14 +19,14 @@ configure wave -signalnamewidth 1
 
 # --- Inputs ---
 add wave -divider Inputs
-add wave -noupdate -label "a"   -color Cyan   /ripple_carry_adder_tb/a
-add wave -noupdate -label "b"   -color Yellow /ripple_carry_adder_tb/b
-add wave -noupdate -label "cin" -color Orange /ripple_carry_adder_tb/cin
+add wave -noupdate -label "a"   -color Cyan   /$TB/a
+add wave -noupdate -label "b"   -color Yellow /$TB/b
+add wave -noupdate -label "cin" -color Orange /$TB/cin
 
 # --- Outputs ---
 add wave -divider Outputs
-add wave -noupdate -label "sum"  -color Green   /ripple_carry_adder_tb/sum
-add wave -noupdate -label "cout" -color Magenta /ripple_carry_adder_tb/cout
+add wave -noupdate -label "sum"  -color Green   /$TB/sum
+add wave -noupdate -label "cout" -color Magenta /$TB/cout
 
 # --- Wave display settings ---
 WaveRestoreZoom {0 ns} {5200 ns}

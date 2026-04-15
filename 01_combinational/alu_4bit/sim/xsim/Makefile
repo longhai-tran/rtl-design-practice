@@ -1,8 +1,7 @@
 # =============================================================================
-# Makefile — alu_4bit | Vivado xsim
+# Makefile | Vivado xsim
 # =============================================================================
-TOP  = alu_4bit_tb
-SRCS = ../../alu_4bit.v ../../alu_4bit_tb.v
+# TOP and SRCS are auto-detected by xsim.mk (override here only if needed)
 
 ROOT := $(shell git -C $(dir $(abspath $(lastword $(MAKEFILE_LIST)))) rev-parse --show-toplevel)
 include $(ROOT)/scripts/xsim.mk

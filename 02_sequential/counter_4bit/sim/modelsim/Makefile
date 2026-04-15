@@ -1,8 +1,7 @@
 # =============================================================================
-# Makefile — shift_register | ModelSim / Questa
+# Makefile | ModelSim / Questa
 # =============================================================================
-TOP  = counter_4bit_tb
-SRCS = ../../counter_4bit.v ../../counter_4bit_tb.v
+# TOP and SRCS are auto-detected by modelsim.mk (override here only if needed)
 
 ROOT := $(shell git -C $(dir $(abspath $(lastword $(MAKEFILE_LIST)))) rev-parse --show-toplevel)
 include $(ROOT)/scripts/modelsim.mk

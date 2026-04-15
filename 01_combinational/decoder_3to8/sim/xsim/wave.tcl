@@ -1,9 +1,14 @@
 log_wave -recursive /
 
-add_wave /decoder_3to8_tb/in
-add_wave /decoder_3to8_tb/en
-add_wave /decoder_3to8_tb/y
-add_wave /decoder_3to8_tb/expected_y
-add_wave /decoder_3to8_tb/error_count
+# Get the top-level testbench scope
+set tbs [get_scopes -filter {NAME =~ "*tb*"}]
+if {[llength $tbs] == 0} { error "Testbench scope not found." }
+set TB [lindex $tbs 0]
+
+add_wave /$TB/in
+add_wave /$TB/en
+add_wave /$TB/y
+add_wave /$TB/expected_y
+add_wave /$TB/error_count
 
 run all

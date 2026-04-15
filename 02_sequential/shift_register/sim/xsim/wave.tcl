@@ -1,20 +1,25 @@
 # XSIM waveform config for shift_register
 log_wave -recursive /
 
+# Get the top-level testbench scope
+set tbs [get_scopes -filter {NAME =~ "*tb*"}]
+if {[llength $tbs] == 0} { error "Testbench scope not found." }
+set TB [lindex $tbs 0]
+
 add_wave_divider "System"
-add_wave /shift_register_tb/clk
-add_wave /shift_register_tb/rst_n
+add_wave /$TB/clk
+add_wave /$TB/rst_n
 
 add_wave_divider "Inputs"
-add_wave /shift_register_tb/din
+add_wave /$TB/din
 
 add_wave_divider "Outputs"
-add_wave /shift_register_tb/q
+add_wave /$TB/q
 
 add_wave_divider "Expected Outputs"
-add_wave /shift_register_tb/expected_q
+add_wave /$TB/expected_q
 
-add_wave -radix dec /shift_register_tb/error_count
+add_wave -radix dec /$TB/error_count
 
 run all
 # quit

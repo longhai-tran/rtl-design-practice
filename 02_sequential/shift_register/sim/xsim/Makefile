@@ -1,8 +1,7 @@
 # =============================================================================
-# Makefile — shift_register | Vivado xsim
+# Makefile | Vivado xsim
 # =============================================================================
-TOP  = shift_register_tb
-SRCS = ../../shift_register.v ../../shift_register_tb.v
+# TOP and SRCS are auto-detected by xsim.mk (override here only if needed)
 
 ROOT := $(shell git -C $(dir $(abspath $(lastword $(MAKEFILE_LIST)))) rev-parse --show-toplevel)
 include $(ROOT)/scripts/xsim.mk

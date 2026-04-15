@@ -1,8 +1,7 @@
 # =============================================================================
-# Makefile — dff | ModelSim / Questa
+# Makefile | ModelSim / Questa
 # =============================================================================
-TOP  = dff_tb
-SRCS = ../../dff.v ../../dff_tb.v
+# TOP and SRCS are auto-detected by modelsim.mk (override here only if needed)
 
 ROOT := $(shell git -C $(dir $(abspath $(lastword $(MAKEFILE_LIST)))) rev-parse --show-toplevel)
 include $(ROOT)/scripts/modelsim.mk
