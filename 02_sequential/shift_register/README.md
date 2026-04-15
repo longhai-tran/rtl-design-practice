@@ -101,14 +101,14 @@ Run simulation from `sim/xsim` to view the waveform.
    PASS |   10 |   106000 |  0  | 1100
    PASS |   11 |   116000 |  0  | 1000
    PASS |   12 |   126000 |  0  | 0000
-PASS  RST | Async reset mid-shift: q=0000
+   PASS |  RST |   129000 |  -  | Async reset mid-shift: q=0000
 --- Pattern 1010 after reset ---
-   FAIL |   13 |   146000 |  1  | 0011 (expected 0001)
-   FAIL |   14 |   156000 |  0  | 0110 (expected 0010)
-   FAIL |   15 |   166000 |  1  | 1101 (expected 0101)
-   PASS |   16 |   176000 |  0  | 1010
+   PASS |   13 |   136000 |  1  | 0001
+   PASS |   14 |   146000 |  0  | 0010
+   PASS |   15 |   156000 |  1  | 0101
+   PASS |   16 |   166000 |  0  | 1010
 -------------------------------------------
-=== FAIL: 3 mismatches detected ===
+=== PASS: all test vectors matched ===
 ```
 
 ---
