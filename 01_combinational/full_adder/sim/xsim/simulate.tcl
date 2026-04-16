@@ -1,33 +1,32 @@
-# ==============================================================================
-# simulate.tcl — Standalone script for Vivado xsim
-# ==============================================================================
-# Purpose: Compile, elaborate, and run simulation without using Makefile.
-# Usage:   xtclsh simulate.tcl
-# ==============================================================================
+# =============================================================================
+# simulate.tcl — Portable xsim runner
+# Usage: xtclsh simulate.tcl
+# TOP + SOURCES auto-detected from path: <module>/sim/xsim/simulate.tcl
+# =============================================================================
 
-set TOP "full_adder_tb"
-set SOURCES [list "../../full_adder.v" "../../full_adder_tb.v"]
-set SNAP "sim_snapshot"
+set script_dir [file dirname [file normalize [info script]]]
+set TOP        "[file tail [file dirname [file dirname $script_dir]]]_tb"
+set SOURCES    [lsort [glob -nocomplain ../../*.v ../../*.sv]]
+set SNAP       "sim_snapshot"
 
-puts "\[TCL\] Starting standalone simulation for $TOP..."
+if {[llength $SOURCES] == 0} {
+    puts "\[ERROR\] No source files found in ../../"
+    exit 1
+}
 
-puts "\n\[TCL\] --- Step 1: Compiling ---"
+puts "\[TCL\] TOP     = $TOP"
+puts "\[TCL\] SOURCES = $SOURCES"
+
 if {[catch {exec xvlog {*}$SOURCES >@stdout} err]} {
     puts "\[ERROR\] Compilation failed:\n$err"
     exit 1
 }
-
-puts "\n\[TCL\] --- Step 2: Elaborating ---"
 if {[catch {exec xelab $TOP -s $SNAP >@stdout} err]} {
     puts "\[ERROR\] Elaboration failed:\n$err"
     exit 1
 }
-
-puts "\n\[TCL\] --- Step 3: Simulating ---"
 if {[catch {exec xsim $SNAP -R >@stdout} err]} {
     puts "\[ERROR\] Simulation failed:\n$err"
     exit 1
 }
-
-puts "\n\[TCL\] Simulation completed successfully!"
-
+puts "\[TCL\] Simulation completed successfully!"

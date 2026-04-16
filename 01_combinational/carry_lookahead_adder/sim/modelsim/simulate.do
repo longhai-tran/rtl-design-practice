@@ -1,26 +1,34 @@
-# sim/modelsim/simulate.do — ModelSim / Questa
-# Compatible: ModelSim PE/DE, Questa Sim
-#
-# HOW TO USE:
-#   vsim -c -do simulate.do          (batch/headless mode)
-#   vsim -do simulate.do             (GUI mode — loads wave.do automatically)
-# ---------------------------------------------------------------------------
+# =============================================================================
+# simulate.do — Portable ModelSim runner
+# Usage: vsim -c -do simulate.do
+# TOP + SOURCES auto-detected from path: <module>/sim/modelsim/simulate.do
+# =============================================================================
 
-if {[file exists work]} {
-    vdel -all -lib work
-}
+# Auto-detect module name: 2 levels above sim/modelsim/
+set MODULE [file tail [file dirname [file dirname [pwd]]]]
+set TOP    ${MODULE}_tb
+
+if {[file exists work]} { vdel -all -lib work }
 vlib work
 vmap work work
 
-vlog ../../carry_lookahead_adder.v
-vlog ../../carry_lookahead_adder_tb.v
+set SOURCES [lsort [glob -nocomplain ../../*.v ../../*.sv]]
+if {[llength $SOURCES] == 0} {
+    puts "\[ERROR\] No source files found in ../../"
+    quit -f
+}
+
+puts "\[DO\] TOP     = $TOP"
+puts "\[DO\] SOURCES = $SOURCES"
+
+foreach f $SOURCES { vlog $f }
 
 if {[info exists ::env(VSIM_BATCH)] || [catch {gui_is_open} result]} {
-    vsim -c work.carry_lookahead_adder_tb
+    vsim -c work.$TOP
     run -all
     quit -f
 } else {
-    vsim work.carry_lookahead_adder_tb
+    vsim work.$TOP
     do wave.do
     run -all
 }

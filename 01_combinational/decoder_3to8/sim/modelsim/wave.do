@@ -8,6 +8,10 @@
 # ---------------------------------------------------------------------------
 
 # Clear existing waveforms
+
+# Auto-detect testbench name from directory structure
+set TB [file tail [file dirname [file dirname [pwd]]]]_tb
+
 quietly WaveActivateNextPane {} 0
 
 # Global wave configuration to show short signal names (e.g. 'clk' instead of '/tb/clk')
@@ -15,14 +19,14 @@ configure wave -signalnamewidth 1
 
 # --- Inputs ---
 add wave -divider Inputs
-add wave -noupdate -label "in" -color green /decoder_3to8_tb/in
-add wave -noupdate -label "en" -color green /decoder_3to8_tb/en
+add wave -noupdate -label "in" -color green /$TB/in
+add wave -noupdate -label "en" -color green /$TB/en
 
 # --- Outputs ---
 add wave -divider Outputs
-add wave -noupdate -label "y" -color red /decoder_3to8_tb/y
-add wave -noupdate -label "expected_y" -color orange /decoder_3to8_tb/expected_y
-add wave -noupdate -label "error_count" -color yellow /decoder_3to8_tb/error_count
+add wave -noupdate -label "y" -color red /$TB/y
+add wave -noupdate -label "expected_y" -color orange /$TB/expected_y
+add wave -noupdate -label "error_count" -color yellow /$TB/error_count
 
 # --- Wave display settings ---
 WaveRestoreZoom {0 ns} {200 ns}

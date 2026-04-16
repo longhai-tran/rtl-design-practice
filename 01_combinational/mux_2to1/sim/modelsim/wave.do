@@ -8,6 +8,10 @@
 # ---------------------------------------------------------------------------
 
 # Clear existing waveforms
+
+# Auto-detect testbench name from directory structure
+set TB [file tail [file dirname [file dirname [pwd]]]]_tb
+
 quietly WaveActivateNextPane {} 0
 
 # Global wave configuration to show short signal names (e.g. 'clk' instead of '/tb/clk')
@@ -15,20 +19,20 @@ configure wave -signalnamewidth 1
 
 # --- Inputs ---
 add wave -divider Inputs
-add wave -noupdate -label "a"   -color Cyan   /mux_2to1_tb/a
-add wave -noupdate -label "b"   -color Yellow /mux_2to1_tb/b
-add wave -noupdate -label "sel" -color Orange /mux_2to1_tb/sel
+add wave -noupdate -label "a"   -color Cyan   /$TB/a
+add wave -noupdate -label "b"   -color Yellow /$TB/b
+add wave -noupdate -label "sel" -color Orange /$TB/sel
 
 # --- Output ---
 add wave -divider Output
-add wave -noupdate -label "y"   -color Green  /mux_2to1_tb/y
+add wave -noupdate -label "y"   -color Green  /$TB/y
 
 # --- DUT Internal ---
 add wave -divider DUT Ports
-add wave -noupdate -label "dut.a"   /mux_2to1_tb/dut/a
-add wave -noupdate -label "dut.b"   /mux_2to1_tb/dut/b
-add wave -noupdate -label "dut.sel" /mux_2to1_tb/dut/sel
-add wave -noupdate -label "dut.y"   /mux_2to1_tb/dut/y
+add wave -noupdate -label "dut.a"   /$TB/dut/a
+add wave -noupdate -label "dut.b"   /$TB/dut/b
+add wave -noupdate -label "dut.sel" /$TB/dut/sel
+add wave -noupdate -label "dut.y"   /$TB/dut/y
 
 # --- Wave display settings ---
 WaveRestoreZoom {0 ns} {100 ns}

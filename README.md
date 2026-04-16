@@ -13,8 +13,8 @@
 | Category | Modules | Status |
 |----------|---------|--------|
 | `01_combinational` | mux_2to1, full_adder, alu_4bit | ✅ Active |
-| `02_sequential`    | dff, counter_4bit, shift_register | 🔄 In Progress |
-| `03_fsm`           | sequence_detector, traffic_light | 📅 Planned |
+| `02_sequential`    | dff, counter_4bit, shift_register | ✅ Active |
+| `03_fsm`           | sequence_detector, traffic_light | 🔄 In Progress |
 | `04_memory`        | sync_fifo, async_fifo | 📅 Planned |
 | `05_interfaces`    | uart_tx, uart_rx, spi_master | 📅 Planned |
 | `06_advanced`      | simple_cpu, wishbone_slave | 📅 Planned |

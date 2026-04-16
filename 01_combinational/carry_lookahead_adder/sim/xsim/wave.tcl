@@ -1,4 +1,4 @@
-﻿# wave.tcl — Vivado xsim Waveform Configuration
+# wave.tcl — Vivado xsim Waveform Configuration
 # Module: carry_lookahead_adder
 # ---------------------------------------------------------------------------
 # HOW TO USE:

@@ -1,9 +1,11 @@
 # =============================================================================
 # scripts/modelsim.mk — Shared ModelSim / Questa build rules
 # =============================================================================
-# Usage: include this file at the end of each module's Makefile after defining:
-#   TOP  = <testbench_top_module>
-#   SRCS = <space-separated list of source files>
+# Usage: include this file at the end of each module's Makefile.
+#   TOP  and SRCS are auto-detected from the directory structure:
+#     - TOP  defaults to <module_name>_tb  (2 levels above sim/modelsim/)
+#     - SRCS defaults to all *.v / *.sv files in the module directory
+#   Override either variable before the include line if needed.
 #
 # Targets:
 #   make sim    — Batch / headless simulation (no GUI)
@@ -11,6 +13,10 @@
 #   make do     — Portable: run entirely via simulate.do (no make required)
 #   make clean  — Remove all build artifacts
 # =============================================================================
+
+# --- Auto-detect defaults (override in per-project Makefile if needed) --------
+TOP  ?= $(notdir $(abspath $(CURDIR)/../..))_tb
+SRCS ?= $(wildcard ../../*.v) $(wildcard ../../*.sv)
 
 .PHONY: all sim gui do clean
 
