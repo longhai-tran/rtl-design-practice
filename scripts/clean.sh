@@ -42,6 +42,7 @@ while IFS= read -r -d '' f; do do_rm "$f"; ((count++)); done < <(find . -name "*
 while IFS= read -r -d '' f; do do_rm "$f"; ((count++)); done < <(find . -name "*.jou"                  -print0 2>/dev/null)
 while IFS= read -r -d '' f; do do_rm "$f"; ((count++)); done < <(find . -name "*.wdb"                  -print0 2>/dev/null)
 while IFS= read -r -d '' f; do do_rm "$f"; ((count++)); done < <(find . -name "dfx_runtime.txt"        -print0 2>/dev/null)
+while IFS= read -r -d '' f; do do_rm "$f"; ((count++)); done < <(find . -name "vivado*.str"            -print0 2>/dev/null)
 
 # --- ModelSim / QuestaSim artifacts ---
 while IFS= read -r -d '' f; do do_rm "$f"; ((count++)); done < <(find . -name "work"          -type d  -print0 2>/dev/null)
