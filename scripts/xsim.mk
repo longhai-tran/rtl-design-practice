@@ -51,5 +51,5 @@ do:
 # clean — Remove all generated artifacts
 # -----------------------------------------------------------------------------
 clean:
-	rm -rf xsim.dir/ *.pb *.log *.jou *.wdb webtalk/ .Xil/ dfx_runtime.txt
+	rm -rf xsim.dir/ *.pb *.log *.jou *.wdb webtalk/ .Xil/ dfx_runtime.txt vivado*.str
 	@echo "Cleaned."
