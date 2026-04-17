@@ -1,7 +1,7 @@
 # FSM Sequence Detector (1011) — Mealy FSM with Overlap Detection
 
 ![Language](https://img.shields.io/badge/Language-Verilog-blue.svg)
-![Status](https://img.shields.io/badge/Status-complete-brightgreen.svg)
+![Status](https://img.shields.io/badge/Status-Verified-success.svg)
 ![Type](https://img.shields.io/badge/Type-Sequential%20%7C%20FSM-purple.svg)
 ![Style](https://img.shields.io/badge/FSM-Mealy-orange.svg)
 
