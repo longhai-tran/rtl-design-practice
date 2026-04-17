@@ -1,9 +1,8 @@
 log_wave -recursive /
 
 # Get the top-level testbench scope
-set tbs [get_scopes -filter {NAME =~ "*tb*"}]
-if {[llength $tbs] == 0} { error "Testbench scope not found." }
-set TB [lindex $tbs 0]
+# Auto-detect testbench name from directory structure
+set TB [file tail [file dirname [file dirname [pwd]]]]_tb
 
 add_wave_divider "Inputs"
 add_wave /$TB/a
