@@ -79,7 +79,7 @@ Verification uses a directed self-checking testbench (Verilog).
   | rst_n -------->|            |<----------------------|                    |   |
   |                +------------+ next_state            |                    |   |
   |                                                     |                    |   |
-  |  din --->-------------------------------------------|                    |   |
+  |  din ---------------------------------------------->|                    |   |
   |                                                     |                    |-----> detected
   |                                                     +--------------------+   |
   +------------------------------------------------------------------------------+
@@ -98,7 +98,7 @@ Verification uses a directed self-checking testbench (Verilog).
         +--+             +--+             |                 |
         v  |             v  |             v                 |
       +------+   1/0   +------+        +------+   1/0   +------+
- rst->|  S0  |-------->|  S1  |-----^  |  S2  |-------->|  S3  |
+ rst->|  S0  |-------->|  S1  |------->|  S2  |-------->|  S3  |
       | Idle |         | "1"  | 0/0    | "10" |         | "101"|
       +------+         +------+        +------+         +------+
          ^                 ^              |                 |
@@ -113,8 +113,8 @@ Verification uses a directed self-checking testbench (Verilog).
   din:      1  0  1  1  0  1  1  1
   state:   S0 S1 S2 S3 S1 S2 S3 S1  (after each posedge)
   detected: 0  0  0  1  0  0  1  0  (Mealy: output = f(state, din))
-                        ^           ^
-                    match #1     match #2 (overlap)
+                     ^        ^
+                  match #1   match #2 (overlap)
 ```
 
 ---
