@@ -189,7 +189,34 @@ Run simulation from either `sim/modelsim` or `sim/xsim` to view the waveform.
 ---------------------------------------------------------
 [PASS] TC1_c5    t=46000 ns | c5=1 c10=0 | vend=0 chg=0
 [PASS] TC1_c10   t=56000 ns | c5=0 c10=1 | vend=1 chg=0
-
+---------------------------------------------------------
+  TC2: 10u + 10u = 20u -> vend=1, change=1
+---------------------------------------------------------
+[PASS] TC2_c10   t=66000 ns | c5=0 c10=1 | vend=0 chg=0
+[PASS] TC2_c10b  t=76000 ns | c5=0 c10=1 | vend=1 chg=1
+---------------------------------------------------------
+  TC3: 5u + 5u + 5u = 15u -> vend=1, change=0
+---------------------------------------------------------
+[PASS] TC3_c5a   t=86000 ns | c5=1 c10=0 | vend=0 chg=0
+[PASS] TC3_c5b   t=96000 ns | c5=1 c10=0 | vend=0 chg=0
+[PASS] TC3_c5c   t=106000 ns | c5=1 c10=0 | vend=1 chg=0
+---------------------------------------------------------
+  TC4: 10u + 5u = 15u -> vend=1, change=0
+---------------------------------------------------------
+[PASS] TC4_c10   t=116000 ns | c5=0 c10=1 | vend=0 chg=0
+[PASS] TC4_c5    t=126000 ns | c5=1 c10=0 | vend=1 chg=0
+---------------------------------------------------------
+  TC5: Mid-sequence reset recovery
+---------------------------------------------------------
+[PASS] TC5_c5    t=136000 ns | c5=1 c10=0 | vend=0 chg=0
+        [INFO] Asserting reset mid-sequence...
+[PASS] TC5_rst   t=186000 ns | c5=0 c10=1 | vend=0 chg=0
+[PASS] TC5_disc  t=196000 ns | c5=1 c10=0 | vend=1 chg=0
+---------------------------------------------------------
+  TC6: coin_5 & coin_10 simultaneously (coin_10 priority)
+---------------------------------------------------------
+[PASS] TC6_both  t=206000 ns | c5=1 c10=1 | vend=0 chg=0
+[PASS] TC6_disc  t=216000 ns | c5=1 c10=0 | vend=1 chg=0
 =========================================================
   Results: 14 PASSED, 0 FAILED
   STATUS : ** ALL TESTS PASSED **
