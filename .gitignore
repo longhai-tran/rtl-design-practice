@@ -42,3 +42,5 @@ __pycache__/
 # ===== Image results =====
 **/image_results/questa_*
 
+# ===== Draw.io =====
+*.drawio
