@@ -118,6 +118,8 @@ Verification uses a directed self-checking testbench with a reference array mode
 
 Run simulation from either `sim/modelsim` or `sim/xsim` to view the waveform.
 
+![Waveform](image_results/xsim_wave_register_file.png)
+
 ```text
 === register_file Testbench (directed self-check) ===
 
