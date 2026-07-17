@@ -122,6 +122,8 @@ ring-buffer model.
 
 Run simulation from either `sim/modelsim` or `sim/xsim` to view the waveform.
 
+![Waveform](image_results/xsim_wave_sync_fifo.png)
+
 ```text
 === sync_fifo Testbench (directed + random self-check) ===
 
