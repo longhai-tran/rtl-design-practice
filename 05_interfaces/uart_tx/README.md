@@ -12,7 +12,7 @@ baud clock from the system clock using an integer divider — no external PLL or
 clock required. A `tx_start` / `tx_busy` / `tx_done` handshake allows a host controller
 to queue one byte at a time.
 
-> 📖 For full UART protocol background, see [`docs/uart_vi.md`](../../docs/uart_vi.md)
+> 📖 For full UART protocol background, see [`docs/uart_theory.md`](../../docs/uart_theory.md)
 > (idle state, frame structure, baud error tolerance, framing/overrun/parity errors).
 
 ---
