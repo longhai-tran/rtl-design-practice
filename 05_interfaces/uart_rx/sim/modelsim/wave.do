@@ -29,7 +29,7 @@ add wave -noupdate -radix hex /$TB/dut/data_shift
 add wave -divider {Verification}
 add wave -noupdate -radix decimal /$TB/pass_count
 add wave -noupdate -radix decimal /$TB/fail_count
-add wave -noupdate -radix decimal /$TB/valid_count
+add wave -noupdate -radix decimal /$TB/done_count
 add wave -noupdate -radix decimal /$TB/error_count
 
 WaveRestoreZoom {0 ns} {1200 ns}

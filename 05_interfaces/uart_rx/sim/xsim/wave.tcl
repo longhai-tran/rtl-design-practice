@@ -27,7 +27,7 @@ add_wave -radix hex /$TB/dut/data_shift
 add_wave_divider "Verification"
 add_wave -radix dec /$TB/pass_count
 add_wave -radix dec /$TB/fail_count
-add_wave -radix dec /$TB/valid_count
+add_wave -radix dec /$TB/done_count
 add_wave -radix dec /$TB/error_count
 
 run all
