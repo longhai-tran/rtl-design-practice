@@ -47,7 +47,7 @@ fi
 
 for f in $RTL_FILES; do
     echo "→ Linting $f"
-    if verilator --lint-only -Wall "$f" 2>&1; then
+    if verilator --lint-only -Wall -y "$(dirname "$f")" "$f" 2>&1; then
         echo "   ✅ PASS"
         PASS=$((PASS + 1))
     else
