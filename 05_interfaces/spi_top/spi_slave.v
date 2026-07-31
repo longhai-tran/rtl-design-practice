@@ -40,7 +40,14 @@ module spi_slave #(
     // -------------------------------------------------------------------------
 
     // Minimum bit-width to count 0..(DATA_WIDTH-1)
-    localparam integer BIT_BITS = (DATA_WIDTH < 2) ? 1 : $clog2(DATA_WIDTH);
+    localparam integer   BIT_BITS     = (DATA_WIDTH < 2) ? 1 : $clog2(DATA_WIDTH);
+
+    // Width-typed constants for width-clean comparisons (avoids WIDTHEXPAND warnings)
+    // Truncation is safe: DATA_WIDTH-1 always fits in BIT_BITS bits by clog2 construction
+    // verilator lint_off WIDTHTRUNC
+    localparam [BIT_BITS-1:0] BIT_MAX      = DATA_WIDTH - 1;  // max value of bit_index
+    localparam [BIT_BITS-1:0] BIT_ADDR_MAX = DATA_WIDTH - 1;  // MSB index for bit addressing
+    // verilator lint_on WIDTHTRUNC
 
     // SCLK resting level matches master's CPOL
     localparam SCLK_IDLE = CPOL[0];
@@ -78,25 +85,27 @@ module spi_slave #(
     // Return bit at position `index` from the MSB end (index 0 = MSB)
     function tx_bit;
         input [DATA_WIDTH-1:0] word;
-        input integer index;
+        input [BIT_BITS-1:0] index;
         begin
-            tx_bit = word[DATA_WIDTH-1-index];
+            tx_bit = word[BIT_ADDR_MAX - index];
         end
     endfunction
 
     // Insert `sample` into position `index` (from MSB) of `word`; return updated word.
     // In Verilog-2001 a function "returns" by assigning to the function name itself.
+    // verilator lint_off BLKSEQ
     function [DATA_WIDTH-1:0] rx_insert;
         input [DATA_WIDTH-1:0] word;
-        input integer index;
+        input [BIT_BITS-1:0] index;
         input sample;
         reg [DATA_WIDTH-1:0] updated;
         begin
             updated = word;
-            updated[DATA_WIDTH-1-index] = sample;
+            updated[BIT_ADDR_MAX - index] = sample;
             rx_insert = updated;         // return value
         end
     endfunction
+    // verilator lint_on BLKSEQ
 
     // -------------------------------------------------------------------------
     // Sequential logic — single always block, system-clock domain
@@ -164,7 +173,7 @@ module spi_slave #(
                         rx_shift <= rx_insert(rx_shift, bit_index, mosi);
 
                     // Advance to next bit (if not the last one)
-                    if (bit_index < (DATA_WIDTH - 1)) begin
+                    if (bit_index < BIT_MAX) begin
                         bit_index <= bit_index + 1'b1;
 
                         if (CPHA == 0)

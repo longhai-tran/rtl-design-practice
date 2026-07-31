@@ -40,6 +40,14 @@ module spi_master #(
     localparam integer DIV_BITS = (HALF_PERIOD < 2) ? 1 : $clog2(HALF_PERIOD);
     localparam integer BIT_BITS = (DATA_WIDTH  < 2) ? 1 : $clog2(DATA_WIDTH);
 
+    // Width-typed constants for width-clean comparisons (avoids WIDTHEXPAND warnings)
+    // Truncation is safe: HALF_PERIOD-1 and DATA_WIDTH-1 always fit in DIV_BITS/BIT_BITS by clog2 construction
+    // verilator lint_off WIDTHTRUNC
+    localparam [DIV_BITS-1:0] DIV_MAX      = HALF_PERIOD - 1;  // max value of div_count
+    localparam [BIT_BITS-1:0] BIT_MAX      = DATA_WIDTH  - 1;  // max value of bit_index
+    localparam [BIT_BITS-1:0] BIT_ADDR_MAX = DATA_WIDTH  - 1;  // MSB index for bit addressing
+    // verilator lint_on WIDTHTRUNC
+
     // SCLK resting level is determined entirely by CPOL
     localparam SCLK_IDLE = CPOL[0];
 
@@ -65,24 +73,26 @@ module spi_master #(
     // Return the bit at position `index` from MSB end (index 0 = MSB)
     function tx_bit;
         input [DATA_WIDTH-1:0] word;
-        input integer index;
+        input [BIT_BITS-1:0]   index;
         begin
-            tx_bit = word[DATA_WIDTH-1-index];
+            tx_bit = word[BIT_ADDR_MAX - index];
         end
     endfunction
 
     // Write `sample` into position `index` (from MSB) of `word`; return updated word
+    // verilator lint_off BLKSEQ
     function [DATA_WIDTH-1:0] rx_insert;
         input [DATA_WIDTH-1:0] word;
-        input integer index;
+        input [BIT_BITS-1:0] index;
         input sample;
         reg [DATA_WIDTH-1:0] updated;
         begin
             updated = word;
-            updated[DATA_WIDTH-1-index] = sample;
+            updated[BIT_ADDR_MAX - index] = sample;
             rx_insert = updated;
         end
     endfunction
+    // verilator lint_on BLKSEQ
 
     // -------------------------------------------------------------------------
     // FSM — synchronous reset
@@ -136,7 +146,7 @@ module spi_master #(
                 //   Each full SCLK cycle processes one bit
                 // ---------------------------------------------------------
                 ST_TRANSFER: begin
-                    if (div_count < (HALF_PERIOD - 1)) begin
+                    if (div_count < DIV_MAX) begin
                         div_count <= div_count + 1'b1;  // still counting; hold SCLK
 
                     end else begin
@@ -162,7 +172,7 @@ module spi_master #(
                                 rx_shift <= rx_insert(rx_shift, bit_index, miso);
 
                             // Check if this was the last bit
-                            if (bit_index == (DATA_WIDTH - 1)) begin
+                            if (bit_index == BIT_MAX) begin
                                 // Commit final received word
                                 if (CPHA == 0)
                                     rx_data <= rx_shift;                             // Mode 0/2: already in rx_shift
