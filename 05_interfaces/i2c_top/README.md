@@ -316,8 +316,9 @@ Detailed verification intent is recorded in [docs/test_plan.md](docs/test_plan.m
 |---|-------|--------|
 | [1] | **I²C Protocol — Lý Thuyết Giao Thức I²C** | [`docs/i2c_theory.md`](../../docs/i2c_theory.md) — Open-drain bus, START/STOP, address frame, ACK/NACK, FSM architecture |
 | [2] | **I²C-bus specification and user manual Rev. 7.0** | [NXP UM10204](https://www.nxp.com/docs/en/user-guide/UM10204.pdf) |
-| [3] | **Understanding the I²C Bus** | [Texas Instruments SLVA704](https://www.ti.com/lit/an/slva704/slva704.pdf) |
+| [3] | **Understanding the I²C Bus** | [Texas Instruments SLVA704](https://www.ti.com/lit/an/slva704/slva704.pdf?ts=1699596969514&ref_url=https%3A%2F%2Fwww.google.com%2F) |
 | [4] | **Wikipedia — I²C** | [wikipedia.org](https://en.wikipedia.org/wiki/I%C2%B2C) |
+| [5] | **Giao thức I2C — E-Lab** | [blog.deviot.vn](https://blog.deviot.vn/posts/lap-trinh-vi-dieu-khien/giao-thuc-i2c) |
 
 ---
 
