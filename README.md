@@ -16,8 +16,8 @@
 | `02_sequential`    | dff, counter_4bit, shift_register | ✅ Active |
 | `03_fsm`           | sequence_detector, traffic_light | ✅ Active |
 | `04_memory`        | sync_fifo, async_fifo | ✅ Active |
-| `05_interfaces`    | uart_tx, uart_rx, uart_top, spi_top, i2c_top | 🔄 In Progress |
-| `06_advanced`      | simple_cpu, wishbone_slave | 📅 Planned |
+| `05_interfaces`    | uart_tx, uart_rx, uart_top, spi_top, i2c_top | ✅ Active |
+| `06_advanced`      | simple_cpu, wishbone_top | 🔄 In Progress |
 
 ## 🛠️ Tools & Environment
 
