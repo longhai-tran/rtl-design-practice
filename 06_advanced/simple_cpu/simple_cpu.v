@@ -127,7 +127,9 @@ module simple_cpu #(
     // =========================================================================
     reg [1:0] state;                               // Current FSM state
 
+    /* verilator lint_off UNDRIVEN */
     reg [15:0]          imem [0:(1<<ADDR_WIDTH)-1]; // Instruction memory: 2^ADDR_WIDTH × 16-bit words
+    /* verilator lint_on UNDRIVEN */
     reg [DATA_WIDTH-1:0] dmem [0:(1<<ADDR_WIDTH)-1]; // Data memory:        2^ADDR_WIDTH × DATA_WIDTH bytes
     reg [DATA_WIDTH-1:0] regs [0:3];               // General-purpose register file: R0–R3
 
