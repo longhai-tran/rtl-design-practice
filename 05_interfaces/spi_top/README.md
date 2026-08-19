@@ -11,7 +11,7 @@ A parameterized, fully synthesizable SPI subsystem supporting all four standard 
 simultaneously exchanges one word in both directions (**full-duplex**). The wrapper is purely
 structural: no hidden FIFOs, buffering, or arbitration inside.
 
-> 📖 For full SPI protocol background, see [`docs/spi_theory.md`](../docs/spi_theory.md)
+> 📖 For full SPI protocol background, see [`docs/spi_theory.md`](../../docs/spi_theory.md)
 > (CPOL/CPHA modes, SCLK timing, MSB-first shift, CS polarity, multi-slave).
 
 ---
@@ -302,4 +302,3 @@ Detailed verification intent is recorded in [docs/test_plan.md](docs/test_plan.m
 ---
 
 *Module: `spi_top.v` · Author: Long Hai · Protocol: SPI Modes 0–3 full duplex*
-
